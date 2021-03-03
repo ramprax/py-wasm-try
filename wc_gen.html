@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wordcloud generator</title>
+</head>
+<body>
+    <div>
+        <form name="text_to_image" id="text_to_image">
+            <div><label>Enter text:
+                <textarea id="input_text" name="input_text">
+                    Arunachala Ramana Bhavatarini Maa Ramakrishna Bhagavan Thakur Dakshineshwar !!
+                </textarea></label></div>
+            <button id="wc_gen_text" type="button" name="wc_gen_text" disabled>Generate Wordcloud</button>
+            <div><img id="output_text_image" src="" alt="Wordcloud image"/></div>
+        </form>
+    </div>
+    <hr>
+    <div>
+        <form name="file_to_image" id="file_to_image">
+            <div><label>Choose a file:<input type="file" id="input_file" name="input_file"/></label></div>
+            <button id="wc_gen_file" type="button" name="wc_gen_file" disabled>Generate Wordcloud</button>
+            <div><img id="output_file_image" src="" alt="Wordcloud image for file"/></div>
+        </form>
+    </div>
+    <script type="text/javascript">
+      // set the pyodide files URL (packages.json, pyodide.asm.data etc)
+      window.languagePluginUrl = 'https://cdn.jsdelivr.net/pyodide/v0.16.1/full/';
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/pyodide/v0.16.1/full/pyodide.js"></script>
+    <script type="text/javascript" src="./js/wc_gen.js"></script>
+</body>
+</html>
