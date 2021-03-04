@@ -22,11 +22,26 @@ let loadPythonScripts = function() {
     return loadPythonScript('wc_gen.py');
 }
 
-let do_wc_gen = function(input_text_value) {
+let do_wc_gen = function(input_text_value, repeat, width, height) {
     console.log('Before btoa');
     input_text_value = btoa(input_text_value);
     console.log('After btoa');
-    result = pyodide.runPython('wc_gen(\'\'\''+input_text_value+'\'\'\')');
+
+    let repeatPyBool; // = 'False';
+    if(repeat) {
+        repeatPyBool = 'True';
+    } else {
+        repeatPyBool = 'False'
+    }
+
+    let repeatArg = 'repeat='+repeatPyBool;
+    let widthArg = 'width='+parseInt(width);
+    let heightArg = 'height='+parseInt(height);
+    let kwArgs = repeatArg + ', ' + widthArg + ', ' + heightArg;
+
+    let pythonCallStr = 'wc_gen(\'\'\''+input_text_value+'\'\'\', '+kwArgs+')'
+    console.log('Calling python: '+pythonCallStr);
+    let result = pyodide.runPython(pythonCallStr);
     console.log('After python call to wc_gen()');
     return result;
 }
@@ -59,10 +74,20 @@ let wcGenHandler = function() {
     let output_image = document.getElementById('output_image');
     let dl_link = document.getElementById('image_dl');
 
+    let repeat_checkbox = document.getElementById('repeat');
+    let wc_width_inp = document.getElementById('wc_width');
+    let wc_height_inp = document.getElementById('wc_height');
     return function() {
         let onGetInputText = function(input_text) {
             if(input_text) {
-                let b64img_str = do_wc_gen(input_text);
+                let repeatVal = repeat_checkbox.checked;
+                let wcWidth = wc_width_inp.value;
+                let wcHeight = wc_height_inp.value;
+
+                let b64img_str = do_wc_gen(input_text, repeatVal, wcWidth, wcHeight);
+
+                output_image.width = wcWidth;
+                output_image.height = wcHeight;
                 output_image.src = 'data:image/png;base64,' + b64img_str;
                 dl_link.href = 'data:image/png;base64,' + b64img_str;
             }
