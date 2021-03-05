@@ -46,25 +46,33 @@ let do_wc_gen = function(input_text_value, repeat, width, height) {
     return result;
 }
 
-let getInputText = function(input_text_element, input_file_element, successFunc, errorFunc) {
-    let input_choice = document.querySelector('input[name="input_choice"]:checked').value;
-    if(input_choice == 'text') {
-        let input_text = input_text_element.value;
-        setTimeout(successFunc, 10, input_text);
-    } else if(input_choice == 'file') {
-        if(input_file_element.files[0]) {
-            let fr = new FileReader();
-            fr.onload = function(evt) {
-                let input_text = evt.target.result;
-                setTimeout(successFunc, 10, input_text);
+let getInputText = function(input_text_element, input_file_element) {
+    return new Promise((resolve, reject) => {
+        let input_choice = document.querySelector('input[name="input_choice"]:checked');
+        if(input_choice) {
+            input_choice = input_choice.value;
+            if(input_choice == 'text') {
+                let input_text = input_text_element.value;
+                resolve(input_text);
+            } else if(input_choice == 'file') {
+                if(input_file_element.files[0]) {
+                    let fr = new FileReader();
+                    fr.onprogress = console.log;
+                    fr.onload = function() {
+                        resolve(fr.result);
+                    }
+                    fr.onerror = reject;
+                    fr.readAsBinaryString(input_file_element.files[0]);
+                } else {
+                    reject('No files selected: '+input_file_element.files);
+                }
+            } else {
+                reject('Could not understand input choice: '+input_choice);
             }
-            fr.onprogress = console.log;
-            fr.onerror = errorFunc;
-            fr.readAsBinaryString(input_file_element.files[0]);
+        } else {
+            reject('No input choice given: '+input_choice);
         }
-    } else {
-        errorFunc('Could not figure out input choice')
-    }
+    });
 }
 
 let wcGenHandler = function() {
@@ -95,7 +103,7 @@ let wcGenHandler = function() {
             overlaySpinnerOff();
         }
         let onInputTextError = function(err) {
-            console.log(err);
+            console.error(err);
             wc_gen_button.disabled = false;
             overlaySpinnerOff();
             alert(err);
@@ -103,7 +111,7 @@ let wcGenHandler = function() {
 
         wc_gen_button.disabled = true;
         overlaySpinnerOn();
-        getInputText(input_text_element, input_file_element, onGetInputText, onInputTextError);
+        getInputText(input_text_element, input_file_element).then(onGetInputText, onInputTextError).catch(onInputTextError);
 
         return false;
     }
