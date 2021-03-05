@@ -46,33 +46,41 @@ let do_wc_gen = function(input_text_value, repeat, width, height) {
     return result;
 }
 
-let getInputText = function(input_text_element, input_file_element) {
-    return new Promise((resolve, reject) => {
-        let input_choice = document.querySelector('input[name="input_choice"]:checked');
+let getInputChoice = function() {
+    let input_choice = document.querySelector('input[name="input_choice"]:checked');
+    if(input_choice) {
+        input_choice = input_choice.value;
         if(input_choice) {
-            input_choice = input_choice.value;
-            if(input_choice == 'text') {
-                let input_text = input_text_element.value;
-                resolve(input_text);
-            } else if(input_choice == 'file') {
-                if(input_file_element.files[0]) {
-                    let fr = new FileReader();
-                    fr.onprogress = console.log;
-                    fr.onload = function() {
-                        resolve(fr.result);
-                    }
-                    fr.onerror = reject;
-                    fr.readAsBinaryString(input_file_element.files[0]);
-                } else {
-                    reject('No files selected: '+input_file_element.files);
-                }
-            } else {
-                reject('Could not understand input choice: '+input_choice);
-            }
-        } else {
-            reject('No input choice given: '+input_choice);
+            return input_choice;
         }
-    });
+    }
+    throw new Error('No input choice given: '+input_choice);
+}
+
+let getInputText = function(input_choice) {
+    let input_text_element = document.getElementById('input_text');
+    let input_file_element = document.getElementById('input_file');
+    if(input_choice == 'text') {
+        let input_text = input_text_element.value;
+        return input_text;
+    } else if(input_choice == 'file') {
+        console.log('input_choice:', input_choice);
+        console.log('input_file_element:', input_file_element);
+        console.log('files: ', input_file_element.files);
+        if(input_file_element.files[0]) {
+            return new Promise((resolve, reject) => {
+                let fr = new FileReader();
+                fr.onprogress = console.log;
+                fr.onload = function() {
+                    resolve(fr.result);
+                }
+                fr.onerror = reject;
+                fr.readAsBinaryString(input_file_element.files[0]);
+            });
+        }
+        throw new Error('No files selected: '+input_file_element.files);
+    }
+    throw new Error('Could not understand input choice: '+input_choice);
 }
 
 let wcGenHandler = function() {
@@ -86,7 +94,7 @@ let wcGenHandler = function() {
     let wc_width_inp = document.getElementById('wc_width');
     let wc_height_inp = document.getElementById('wc_height');
     return function() {
-        let onGetInputText = function(input_text) {
+        let onInputText = function(input_text) {
             if(input_text) {
                 let repeatVal = repeat_checkbox.checked;
                 let wcWidth = wc_width_inp.value;
@@ -111,7 +119,7 @@ let wcGenHandler = function() {
 
         wc_gen_button.disabled = true;
         overlaySpinnerOn();
-        getInputText(input_text_element, input_file_element).then(onGetInputText, onInputTextError).catch(onInputTextError);
+        (new Promise((resolve, reject) => { resolve(getInputChoice()); })).then(getInputText).then(onInputText).catch(onInputTextError);
 
         return false;
     }
