@@ -20,13 +20,12 @@ def make_wc_with_mask():
 
     # read the mask image taken from
     # http://www.stencilry.org/stencils/movies/star%20wars/storm-trooper.gif
-    mask = np.array(Image.open("C:\\Users\\rampr\\Pictures\\Ajit\\ajit_face_large_nobg_bw_ff.png"))
+    mask = np.array(Image.open("C:\\Users\\rampr\\Pictures\\outline-map-india-mask-ff.png"))
     # mask[mask > 223] = 255
     # mask[mask <= 223] = 0
     #mask[mask == 0] = 255
     #mask[mask == 1] = 0
 
-    # mask = np.array(Image.open("C:\\Users\\rampr\\Pictures\\Ajit\\ajit_face_large_nobg_color_notrans.png"))
 
     #mask = np.array(Image.open("C:\\Users\\rampr\\Pictures\\alice_mask.png"))
 
@@ -42,7 +41,7 @@ def make_wc_with_mask():
     # pre-processing the text a little bit
     # text = text.replace("HAN", "Han")
     # text = text.replace("LUKE'S", "Luke")
-    text = '''ajit anu avyukt atiksh devanathan st muthu rickshaw 103 ttk Road 4996979 nes nps 45A 5C 23 3A hercules mtb bist'''
+    text = '''blah'''
 
     # adding movie script specific stopwords
     stopwords = set() # set(STOPWORDS)
@@ -54,13 +53,13 @@ def make_wc_with_mask():
     wc = WordCloud(mask=mask, stopwords=stopwords, collocation_threshold=0, include_numbers=True, # margin=10,  # max_words=1000,
                    random_state=1, repeat=True, background_color='white', max_font_size=20).generate(text)
     # store default colored image
-    wc.to_file('aj_default.png')
+    wc.to_file('wc_default.png')
     default_colors = wc.to_array()
     # plt.title("Custom colors")
     # plt.imshow(
     wc.recolor(color_func=grey_color_func, random_state=3) #,
                # interpolation="bilinear")
-    wc.to_file("aj_grey.png")
+    wc.to_file("wc_grey.png")
     # plt.axis("off")
     # plt.figure()
     # plt.title("Default colors")
@@ -73,9 +72,11 @@ def make_wc_with_mask():
 
     wc.recolor(color_func=image_colors, random_state=3) #,
                # interpolation="bilinear")
-    wc.to_file("aj_color.png")
+    wc.to_file("wc_color.png")
 
 
 if __name__ == '__main__':
-    make_wc_with_mask()
+    # make_wc_with_mask()
+    mask = np.array(Image.open("C:\\Users\\rampr\\Pictures\\outline-map-india-mask-ff.png"))
+    print(mask)
 
