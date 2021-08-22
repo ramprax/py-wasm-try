@@ -1,7 +1,10 @@
 # py-wasm-try
 Play around with Python + Pyodide + WebAssembly
 
-I was trying to experiment using Pyodide and wordcloud packages.
+See it in action here: https://ramprax.github.io/py-wasm-try/
+
+## Wordcloud Generator
+Experimenting with Pyodide and wordcloud packages.
 - Pyodide - https://github.com/pyodide/pyodide
 - Word Cloud - https://github.com/amueller/word_cloud
 
@@ -13,4 +16,4 @@ In this project, the Pyodide toolchain has been used to generate a Pyodide packa
 
 After Pyodide is loaded in the browser, the wordcloud package is loaded and used for generating images.
 
-See it in action here https://ramprax.github.io/py-wasm-try/
+Try the Wordcloud generator here: https://ramprax.github.io/py-wasm-try/wc_gen.html
