@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QR Code generator</title>
+
+    <!--
+    <script type="text/javascript" src="./js/prefetch_wc_files.js"></script>
+    -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./css/wc_gen.css"/>
+
+</head>
+<body>
+    <div id="overlay_spinner">
+        <div class="spinner"></div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h1>QR Code generator</h1>
+        </div>
+        <div class="row">
+            <form name="text_to_image" id="text_to_image">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Input text</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>
+                                    <input type="radio" id="input_choice_1" name="input_choice" value="file"> Choose a file:
+                                </label>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="file" id="input_file" name="input_file" style="display: inline;"/>
+                            </div>
+                        </div>
+                        <div class="row"><div class="col-sm-3">== OR ==</div></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>
+                                    <input type="radio" id="input_choice_2" name="input_choice" value="text"> Enter text:
+                                </label>
+                            </div>
+                            <div class="col-sm-3">
+                                <textarea id="input_text" name="input_text" rows="10" cols="40">Arunachala Ramana Bhavatarini Maa Ramakrishna Bhagavan Thakur Dakshineshwar Maharshi Paramahamsa!!
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Width (pixels)<input type="number" id="qr_code_width" name="qc_width" value="400"></label>
+                            </div>
+                            <div class="col-sm-3">
+                                <label>Height (pixels)<input type="number" id="qr_code_height" name="qc_height" value="400"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <button id="qr_code_gen_button" type="button" name="qc_gen_text" disabled role="button" class="btn btn-primary">Generate QR Code</button>
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <img id="output_image" src="" alt="QR Code Image" class="rounded" border="1"
+                        width="400" height="400"/>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a id="image_dl" href="" download="text_to_qr_code.png" class="btn btn-default" role="button">Download this image</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      // set the pyodide files URL (packages.json, pyodide.asm.data etc)
+      window.languagePluginUrl = 'https://cdn.jsdelivr.net/pyodide/v0.16.1/full/';
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/pyodide/v0.16.1/full/pyodide.js"></script>
+    <script type="text/javascript" src="./js/qr_code_gen.js"></script>
+</body>
+</html>
