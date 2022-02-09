@@ -46,8 +46,20 @@ let do_wc_gen = function(input_text_value, repeat, width, height) {
     return result;
 }
 
+document.getElementById("input_text").onchange = function(e) {
+//  alert(this.value);
+  document.getElementById("input_choice").value = "text";
+  document.getElementById("input_file").value = "";
+}
+
+document.getElementById("input_file").onchange = function(e) {
+//  alert(this.value);
+  document.getElementById("input_choice").value = "file";
+  document.getElementById("input_text").value = "";
+}
+
 let getInputChoice = function() {
-    let input_choice = document.querySelector('input[name="input_choice"]:checked');
+    let input_choice = document.querySelector('input[name="input_choice"]');
     if(input_choice) {
         input_choice = input_choice.value;
         if(input_choice) {

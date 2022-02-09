@@ -18,69 +18,44 @@
         <div class="spinner"></div>
     </div>
     <div class="container">
-        <div class="row">
-            <h1>Wordcloud generator</h1>
-        </div>
-        <div class="row">
-            <form name="text_to_image" id="text_to_image">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Input text</div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <label>
-                                    <input type="radio" id="input_choice_1" name="input_choice" value="file"> Choose a file:
-                                </label>
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="file" id="input_file" name="input_file" style="display: inline;"/>
-                            </div>
-                        </div>
-                        <div class="row"><div class="col-sm-3">== OR ==</div></div>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <label>
-                                    <input type="radio" id="input_choice_2" name="input_choice" value="text"> Enter text:
-                                </label>
-                            </div>
-                            <div class="col-sm-3">
-                                <textarea id="input_text" name="input_text" rows="10" cols="40">Arunachala Ramana Bhavatarini Maa Ramakrishna Bhagavan Thakur Dakshineshwar Maharshi Paramahamsa!!
-                                </textarea>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <label><input type="checkbox" id="repeat" name="repeat"> Repeat words</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <label>Width (pixels)<input type="number" id="wc_width" name="wc_width" value="400"></label>
-                            </div>
-                            <div class="col-sm-3">
-                                <label>Height (pixels)<input type="number" id="wc_height" name="wc_height" value="200"></label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="row">
-            <button id="wc_gen_button" type="button" name="wc_gen_text" disabled role="button" class="btn btn-primary">Generate Wordcloud</button>
-        </div>
-        <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <img id="output_image" src="" alt="Wordcloud image" class="rounded" border="1"
-                        width="400" height="200"/>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <a id="image_dl" href="" download="text_to_wordcloud.png" class="btn btn-default" role="button">Download this image</a>
-                </div>
+        <h1>Wordcloud generator</h1>
+        <form name="text_to_image" id="text_to_image">
+            <input type="hidden" id="input_choice" name="input_choice" value="text" />
+            <div class="form-group">
+                <textarea id="input_text" name="input_text" rows="10"
+                          placeholder="Type or paste text here or upload a file below"
+                          class="form-control"></textarea> <!--  cols="40" -->
             </div>
-        </div>
+            <div class="form-group">
+                <label for="input_file">Upload a file:</label>
+                <input type="file" id="input_file" name="input_file" style="display: inline;"
+                       class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="repeat" class="form-control">
+                    <input type="checkbox" id="repeat" name="repeat"> Repeat words
+                </label>
+            </div>
+            <div class="form-group">
+                <label>Width (pixels)<input type="number" id="wc_width" name="wc_width" value="400" class="form-control"></label>
+                <label>Height (pixels)<input type="number" id="wc_height" name="wc_height" value="200" class="form-control"></label>
+            </div>
+            <div class="form-group">
+                <button id="wc_gen_button" type="button" name="wc_gen_text" disabled role="button"
+                        class="btn btn-primary form-control">
+                    Generate Wordcloud
+                </button>
+            </div>
+            <div class="form-group">
+                <img id="output_image" src="" alt="Wordcloud image" class="img-fluid rounded" border="1"
+                width="400" height="200"/>
+            </div>
+            <div class="form-group">
+                <a id="image_dl" href="" download="text_to_wordcloud.png"
+                   class="btn btn-default form-control" role="button">
+                    Download this image</a>
+            </div>
+        </form>
     </div>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
