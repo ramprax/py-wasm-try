@@ -94,18 +94,16 @@ let qcGenHandler = function() {
     let output_image = document.getElementById('output_image');
     let dl_link = document.getElementById('image_dl');
 
-    let qr_code_width_inp = document.getElementById('qr_code_width');
-    let qr_code_height_inp = document.getElementById('qr_code_height');
+    let qr_code_size_inp = document.getElementById('qr_code_size');
     return function() {
         let onInputText = function(input_text) {
             if(input_text) {
-                let qcWidth = qr_code_width_inp.value;
-                let qcHeight = qr_code_height_inp.value;
+                let qcSize = qr_code_size_inp.value;
 
-                let b64img_str = do_qr_code_gen(input_text, qcWidth, qcHeight);
+                let b64img_str = do_qr_code_gen(input_text, qcSize, qcSize);
 
-                output_image.width = qcWidth;
-                output_image.height = qcHeight;
+                output_image.width = qcSize;
+                output_image.height = qcSize;
                 output_image.src = 'data:image/png;base64,' + b64img_str;
                 dl_link.href = 'data:image/png;base64,' + b64img_str;
             }
