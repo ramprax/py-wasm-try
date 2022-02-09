@@ -23,57 +23,40 @@
         </div>
         <div class="row">
             <form name="text_to_image" id="text_to_image">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Input text</div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <label>
-                                    <input type="radio" id="input_choice_1" name="input_choice" value="file"> Choose a file:
-                                </label>
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="file" id="input_file" name="input_file" style="display: inline;"/>
-                            </div>
-                        </div>
-                        <div class="row"><div class="col-sm-3">== OR ==</div></div>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <label>
-                                    <input type="radio" id="input_choice_2" name="input_choice" value="text"> Enter text:
-                                </label>
-                            </div>
-                            <div class="col-sm-3">
-                                <textarea id="input_text" name="input_text" rows="10" cols="40">Arunachala Ramana Bhavatarini Maa Ramakrishna Bhagavan Thakur Dakshineshwar Maharshi Paramahamsa!!
-                                </textarea>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <label>Width (pixels)<input type="number" id="qr_code_width" name="qc_width" value="400"></label>
-                            </div>
-                            <div class="col-sm-3">
-                                <label>Height (pixels)<input type="number" id="qr_code_height" name="qc_height" value="400"></label>
-                            </div>
-                        </div>
+                <input type="hidden" id="input_choice" name="input_choice" value="text" />
+                <div class="row form-group">
+                        <textarea class="form-control" id="input_text" name="input_text"
+                                  placeholder="Enter text here or upload file below"></textarea> <!-- rows="10" cols="40" -->
+                </div>
+                <div class="row form-group">
+                    <div class="form-control">
+                        <label for="input_file">Upload a file:</label>
+                        <input type="file" id="input_file" name="input_file" style="display: inline;"  />
                     </div>
+                </div>
+                <div class="row form-group">
+                    <div class="input-group">
+                            <label>Width (pixels)<input type="number" id="qr_code_width" name="qc_width" value="400" class="form-control"></label>
+                            <label>Height (pixels)<input type="number" id="qr_code_height" name="qc_height" value="400" class="form-control"></label>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <button id="qr_code_gen_button" type="button" name="qc_gen_text" disabled role="button"
+                            class="btn btn-primary form-control">
+                        Generate QR Code
+                    </button>
                 </div>
             </form>
         </div>
         <div class="row">
-            <button id="qr_code_gen_button" type="button" name="qc_gen_text" disabled role="button" class="btn btn-primary">Generate QR Code</button>
-        </div>
-        <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <img id="output_image" src="" alt="QR Code Image" class="rounded" border="1"
-                        width="400" height="400"/>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <a id="image_dl" href="" download="text_to_qr_code.png" class="btn btn-default" role="button">Download this image</a>
-                </div>
+            <div class="row form-group">
+                <img id="output_image" src="" alt="QR Code Image" class="img-fluid rounded" border="1"
+                width="400" height="400" />
+            </div>
+            <div class="row form-group">
+                <a id="image_dl" href="" download="text_to_qr_code.png"
+                   class="btn btn-default form-control" role="button">
+                    Download this image</a>
             </div>
         </div>
     </div>
