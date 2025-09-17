@@ -125,7 +125,7 @@ let qcGenHandler = function() {
     }
 }
 
-languagePluginLoader.then(() => {
+loadPyodide().then(() => {
   return pyodide.loadPackage(['pillow', 'micropip']);
 }).then(() => {
   return pyodide.runPythonAsync(`
