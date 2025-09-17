@@ -125,9 +125,8 @@ let qcGenHandler = function() {
     }
 }
 
-loadPyodide().then(() => {
-  return pyodide.loadPackage(['pillow', 'micropip']);
-}).then(() => {
+let pyodide = await loadPyodide();
+pyodide.loadPackage(['pillow', 'micropip']).then(() => {
   return pyodide.runPythonAsync(`
     import micropip
     micropip.install('qrcode')
