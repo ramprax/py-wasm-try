@@ -125,21 +125,24 @@ let qcGenHandler = function() {
     }
 }
 
+let pyodide = null;
 const qrcode_install_code = `
     import micropip
     micropip.install('qrcode')
 `;
-loadPyodide().then((pyodide) => {
-    pyodide.loadPackage(['pillow', 'micropip']).then(() => {
-      return pyodide.runPythonAsync(qrcode_install_code);
-    }).then(loadPythonScripts).then(() => {
-      //console.log(scriptMap);
-      let qr_code_gen_button = document.getElementById('qr_code_gen_button');
-      qr_code_gen_button.onclick = qcGenHandler();
+loadPyodide().then((_pyodide) => {
+    pyodide = _pyodide;
+}).then(() => {
+    return pyodide.loadPackage(['pillow', 'micropip']);
+}).then(() => {
+    return pyodide.runPythonAsync(qrcode_install_code);
+}).then(loadPythonScripts).then(() => {
+    //console.log(scriptMap);
+    let qr_code_gen_button = document.getElementById('qr_code_gen_button');
+    qr_code_gen_button.onclick = qcGenHandler();
     
-      qr_code_gen_button.disabled = false;
-      overlaySpinnerOff();
-    });
+    qr_code_gen_button.disabled = false;
+    overlaySpinnerOff();
 }).catch(err => {
     console.log(err);
     alert('Error: '+err);
