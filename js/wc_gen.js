@@ -22,9 +22,24 @@ let loadPythonScripts = function() {
     return loadPythonScript('wc_gen.py');
 }
 
+let utf8_encoder = new TextEncoder();
+let utf8_decoder = new TextDecoder();
+
+function base64ToBytes(base64) {
+  const binString = atob(base64);
+  return Uint8Array.from(binString, (m) => m.codePointAt(0));
+}
+
+function bytesToBase64(bytes) {
+  const binString = Array.from(bytes, (byte) =>
+    String.fromCodePoint(byte),
+  ).join("");
+  return btoa(binString);
+}
+
 let do_wc_gen = function(input_text_value, repeat, width, height) {
     console.log('Before btoa');
-    input_text_value = btoa(input_text_value);
+    let b64_utf8_input_text_value = bytesToBase64(utf8_encoder.encode(input_text_value));
     console.log('After btoa');
 
     let repeatPyBool; // = 'False';
@@ -39,7 +54,7 @@ let do_wc_gen = function(input_text_value, repeat, width, height) {
     let heightArg = 'height='+parseInt(height);
     let kwArgs = repeatArg + ', ' + widthArg + ', ' + heightArg;
 
-    let pythonCallStr = 'wc_gen(\'\'\''+input_text_value+'\'\'\', '+kwArgs+')'
+    let pythonCallStr = "wc_gen('''"+b64_utf8_input_text_value+"''', "+kwArgs+")";
     console.log('Calling python: '+pythonCallStr);
     let result = pyodide.runPython(pythonCallStr);
     console.log('After python call to wc_gen()');
