@@ -136,14 +136,16 @@ let wcGenHandler = function() {
         return false;
     }
 }
+let pyodide = null;
+//const qrcode_install_code = `
+//    import micropip
+//    micropip.install('wordcloud')
+//`;
 
-languagePluginLoader.then(() => {
-  return fetch('./packages/wordcloud.js', {credentials: 'same-origin', mode: 'cors',})
-}).then(response => {
-  console.log(window.location);
-  console.log(response);
-  let wordcloudUrl = response.url;
-  return pyodide.loadPackage(['matplotlib', 'micropip', wordcloudUrl]);
+loadPyodide().then((_pyodide) => {
+  pyodide = _pyodide;
+}).then(() => {
+  return pyodide.loadPackage(['matplotlib', 'micropip', 'wordcloud']);
 }).then(loadPythonScripts).then(() => {
   //console.log(scriptMap);
   let wc_gen_button = document.getElementById('wc_gen_button');
